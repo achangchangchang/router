@@ -466,7 +466,7 @@ export function createRouter(options: RouterOptions): Router {
     let matcherLocation: MatcherLocationRaw
 
     // path could be relative in object as well
-    if ('path' in rawLocation && rawLocation.path != null) {
+    if (rawLocation.path != null) {
       if (
         __DEV__ &&
         'params' in rawLocation &&
@@ -528,7 +528,7 @@ export function createRouter(options: RouterOptions): Router {
       } else if (!matchedRoute.matched.length) {
         warn(
           `No match found for location with path "${
-            'path' in rawLocation ? rawLocation.path : rawLocation
+            rawLocation.path != null ? rawLocation.path : rawLocation
           }"`
         )
       }
@@ -609,7 +609,7 @@ export function createRouter(options: RouterOptions): Router {
 
       if (
         __DEV__ &&
-        !('path' in newTargetLocation) &&
+        newTargetLocation.path == null &&
         !('name' in newTargetLocation)
       ) {
         warn(
@@ -629,7 +629,7 @@ export function createRouter(options: RouterOptions): Router {
           query: to.query,
           hash: to.hash,
           // avoid transferring params if the redirect has a path
-          params: 'path' in newTargetLocation ? {} : to.params,
+          params: newTargetLocation.path != null ? {} : to.params,
         },
         newTargetLocation
       )
